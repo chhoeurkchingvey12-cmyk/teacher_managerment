@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
@@ -978,6 +978,65 @@ function doPost(e) {
   ]);
   return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// មុខងារស្វ័យប្រវត្តសម្រាប់បង្កើតសន្លឹកកិច្ចការរបាយការណ៍បោះពុម្ព (ចុច Run ម្តងគត់)
+function setupReportSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // ១. ប្តូរឈ្មោះសន្លឹកកិច្ចការដំបូងទៅជា "Sheet1" ប្រសិនជាមិនទាន់ប្តូរ
+  var firstSheet = ss.getSheets()[0];
+  if (firstSheet.getName() !== "Sheet1") {
+    firstSheet.setName("Sheet1");
+  }
+  
+  // ២. បង្កើតសន្លឹកកិច្ចការ "របាយការណ៍បោះពុម្ព" ថ្មី
+  var reportSheet = ss.getSheetByName("របាយការណ៍បោះពុម្ព");
+  if (reportSheet) {
+    ss.deleteSheet(reportSheet);
+  }
+  reportSheet = ss.insertSheet("របាយការណ៍បោះពុម្ព");
+  
+  
+  // ៣. រចនាក្បាលលិខិត
+  reportSheet.getRange("E1").setValue("ព្រះរាជាណាចក្រកម្ពុជា").setFontWeight("bold").setFontSize(12).setHorizontalAlignment("center");
+  reportSheet.getRange("E2").setValue("ជាតិ សាសនា ព្រះមហាក្សត្រ").setFontWeight("bold").setFontSize(11).setHorizontalAlignment("center");
+  reportSheet.getRange("A3").setValue("វិទ្យាល័យសម្ដេចឪ").setFontWeight("bold").setFontSize(11);
+  reportSheet.getRange("D5").setValue("របាយការណ៍អវត្តមានគ្រូបង្រៀនប្រចាំខែ").setFontWeight("bold").setFontSize(16).setHorizontalAlignment("center");
+  
+  // ៤. រៀបចំប្រអប់ Filter
+  reportSheet.getRange("B6").setValue("ឆ្នាំសិក្សា៖").setFontWeight("bold");
+  reportSheet.getRange("C6").setValue("2026-2027").setBackground("#fef3c7").setFontWeight("bold").setHorizontalAlignment("center");
+  reportSheet.getRange("E6").setValue("ជ្រើសរើសខែ (ជាលេខ)៖").setFontWeight("bold");
+  reportSheet.getRange("F6").setValue(8).setBackground("#fef3c7").setFontWeight("bold").setHorizontalAlignment("center");
+  
+  // ៥. ក្បាលតារាង Row 8
+  var headers = ["កាលបរិច្ឆេទ", "ម៉ោងសិក្សា", "ថ្នាក់សិក្សា", "អត្តលេខគ្រូ", "ឈ្មោះគ្រូបង្រៀន", "មុខវិជ្ជា", "ស្ថានភាព", "កំណត់សម្គាល់/មូលហេតុ"];
+  var headerRange = reportSheet.getRange("A8:H8");
+  headerRange.setValues([headers]);
+  headerRange.setBackground("#0B3056")
+             .setFontColor("#ffffff")
+             .setFontWeight("bold")
+             .setHorizontalAlignment("center")
+             .setFontSize(11);
+             
+  // ៦. បញ្ចូលរូបមន្តស្វ័យប្រវត្តក្នុង A9
+  var formula = '=IFERROR(SORT(FILTER(Sheet1!C2:J, Sheet1!B2:B = C6, VALUE(MID(Sheet1!C2:C, 6, 2)) = F6), 1, TRUE), "គ្មានទិន្នន័យសម្រាប់ខែនេះឡើយ")';
+  reportSheet.getRange("A9").setFormula(formula);
+  
+  // ៧. កំណត់ប្រវែងទទឹងជួរនីមួយៗឱ្យសមស្រប
+  reportSheet.setColumnWidth(1, 120); // Date
+  reportSheet.setColumnWidth(2, 100); // Hour
+  reportSheet.setColumnWidth(3, 80);  // Class
+  reportSheet.setColumnWidth(4, 100); // ID
+  reportSheet.setColumnWidth(5, 180); // Name
+  reportSheet.setColumnWidth(6, 130); // Subject
+  reportSheet.setColumnWidth(7, 100); // Status
+  reportSheet.setColumnWidth(8, 220); // Notes
+  
+  ss.toast("បានបង្កើតសន្លឹកកិច្ចការរបាយការណ៍បោះពុម្ពរួចរាល់!", "ជោគជ័យ");
+}
+
 }</pre>
                                     </li>
                                     <li>ចុច <strong>Deploy > New deployment</strong>។ ជ្រើសរើសប្រភេទជា <strong>Web app</strong>។</li>
