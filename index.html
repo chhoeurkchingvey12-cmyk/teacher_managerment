@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិកវិទ្យាល័យសម្ដេចឪ</title>
+    <meta name="description" content="កម្មវិធីគ្រប់គ្រងព័ត៌មាន និងស្ថិតិបុគ្គលិកនៅវិទ្យាល័យសម្ដេចឪ ខេត្តបន្ទាយមានជ័យ">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0e1e38">
+    
+    <!-- iOS / Safari App Icon & Capabilities -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="វិទ្យាល័យសម្ដេចឪ">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icon-512.png">
+    <link rel="icon" type="image/png" href="icon-512.png">
+    <!-- Google Fonts: Kantumruy Pro for Khmer and Inter for English/Numbers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="theme-light">
+    <!-- Beautiful Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-card">
+            <div class="login-logo-container">
+                <div class="login-logo-ring"></div>
+                <img src="icon-512.png" alt="វិទ្យាល័យសម្ដេចឪ" class="login-logo">
+            </div>
+            <h2 class="login-title">ប្រព័ន្ធគ្រប់គ្រងគ្រូបង្រៀន</h2>
+            <p class="login-subtitle">វិទ្យាល័យសម្ដេចឪ ខេត្តបន្ទាយមានជ័យ</p>
+            
+            <form id="login-form">
+                <div class="login-form-group">
+                    <label for="login-password" class="login-label">បញ្ចូលលេខសម្ងាត់ដើម្បីចូលប្រើប្រាស់</label>
+                    <div class="login-input-wrapper">
+                        <input type="password" id="login-password" class="login-input" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" id="btn-login-toggle-password" class="login-toggle-password">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="login-error-msg" class="login-error">លេខសម្ងាត់មិនត្រឹមត្រូវទេ! សូមព្យាយាមម្តងទៀត។</div>
+                </div>
+                <button type="submit" class="login-btn">ចូលប្រើប្រាស់ប្រព័ន្ធ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="school-logo">
+                    <img src="icon-512.png" alt="វិទ្យាល័យសម្តេចឪ" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #d97706; box-shadow: 0 4px 8px rgba(217, 119, 6, 0.15);">
+                </div>
+                <div class="school-info">
+                    <h1 class="school-title" data-i18n="schoolName">វិទ្យាល័យសម្តេចឪ</h1>
+                    <p class="school-sub" data-i18n="schoolLocation">ខេត្តបន្ទាយមានជ័យ</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <!-- Admin Only Menus -->
+                <a href="#dashboard" class="menu-item active" id="menu-dashboard">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9" rx="1" />
+                        <rect x="14" y="3" width="7" height="5" rx="1" />
+                        <rect x="14" y="12" width="7" height="9" rx="1" />
+                        <rect x="3" y="16" width="7" height="5" rx="1" />
+                    </svg>
+                    <span data-i18n="menuDashboard">ផ្ទាំងគ្រប់គ្រង</span>
+                </a>
+                <a href="#teachers" class="menu-item admin-only" id="menu-teachers">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <span data-i18n="menuTeachers">បញ្ជីឈ្មោះគ្រូ</span>
+                </a>
+                <a href="#add-teacher" class="menu-item admin-only" id="menu-add-teacher">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="19" y1="8" x2="19" y2="14" />
+                        <line x1="16" y1="11" x2="22" y2="11" />
+                    </svg>
+                    <span data-i18n="menuAddTeacher">បន្ថែមគ្រូបង្រៀន</span>
+                </a>
+                
+                <!-- Shared / Monitor Menus -->
+                <a href="#attendance" class="menu-item" id="menu-attendance">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4" />
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
+                    <span data-i18n="menuAttendance">ស្រង់អវត្តមានគ្រូ</span>
+                </a>
+
+                <!-- Admin Only Attendance Logs -->
+                <a href="#attendance-logs" class="menu-item admin-only" id="menu-attendance-logs">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    <span data-i18n="menuAttendanceLogs">កំណត់ត្រាអវត្តមាន</span>
+                </a>
+                
+                <a href="#settings" class="menu-item admin-only" id="menu-settings">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                    <span data-i18n="menuSettings">ការកំណត់ & រក្សាទុក</span>
+                </a>
+            </nav>
+            
+            <!-- Logout Button -->
+            <div class="logout-btn-container">
+                <button id="btn-logout" class="logout-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    <span>ចាកចេញ</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <p>© 2026 វិទ្យាល័យសម្តេចឪ</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebar-toggle-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <h2 class="page-title" id="current-page-title" data-i18n="menuDashboard">ផ្ទាំងគ្រប់គ្រង</h2>
+                </div>
+                <div class="header-right">
+                    <!-- Role Switcher -->
+                    <div class="role-selector-wrapper">
+                        <select id="role-select" class="select-control" style="padding: 6px 12px; font-size: 12px; font-weight: 600;">
+                            <option value="admin" data-i18n="roleAdmin">អ្នកគ្រប់គ្រង (Admin)</option>
+                            <option value="monitor" data-i18n="roleMonitor">ប្រធានថ្នាក់ (Monitor)</option>
+                        </select>
+                    </div>
+                    <!-- Academic Year Selector -->
+                    <div class="academic-year-wrapper">
+                        <select id="academic-year-select" class="select-control" style="padding: 6px 12px; font-size: 12px; font-weight: 600; font-family: var(--font-english);">
+                            <option value="2025-2026">2025-2026</option>
+                            <option value="2026-2027" selected>2026-2027</option>
+                            <option value="2027-2028">2027-2028</option>
+                            <option value="2028-2029">2028-2029</option>
+                        </select>
+                    </div>
+                    <!-- Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" id="lang-km" data-lang="km">ខ្មែរ</button>
+                        <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
+                    </div>
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" title="ប្តូរពណ៌ផ្ទៃក្រោយ">
+                        <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Container for pages -->
+            <div class="page-container">
+                
+                <!-- 1. DASHBOARD PAGE -->
+                <section id="page-dashboard" class="app-page active">
+                    <!-- Banner -->
+                    <div class="welcome-banner">
+                        <div class="banner-text">
+                            <h3 data-i18n="welcomeTitle">ប្រព័ន្ធគ្រប់គ្រងគ្រូបង្រៀន</h3>
+                            <h4 data-i18n="schoolNameFull">វិទ្យាល័យសម្ដេចឪ ខេត្តបន្ទាយមានជ័យ</h4>
+                            <p data-i18n="welcomeSub">សូមស្វាគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងសាលារៀនបែបឌីជីថល ងាយស្រួល រហ័ស និងមានសុវត្ថិភាព។</p>
+                        </div>
+                        <div class="banner-decor">
+                            <svg viewBox="0 0 200 200" class="decor-svg">
+                                <defs>
+                                    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#d97706;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="100" cy="100" r="85" fill="none" stroke="url(#gold-grad)" stroke-width="2" stroke-dasharray="8 4" opacity="0.6"/>
+                                <circle cx="100" cy="100" r="75" fill="none" stroke="url(#gold-grad)" stroke-width="1.5" />
+                                <circle cx="100" cy="100" r="65" fill="url(#gold-grad)" opacity="0.1" />
+                                <path d="M65,115 C75,100 90,100 100,105 C110,100 125,100 135,115 L135,85 C125,70 110,70 100,75 C90,70 75,70 65,85 Z" fill="url(#gold-grad)" />
+                                <line x1="100" y1="78" x2="100" y2="108" stroke="#ffffff" stroke-width="2"/>
+                                <polygon points="100,45 130,55 100,65 70,55" fill="url(#gold-grad)"/>
+                                <polygon points="85,60 85,72 100,78 115,72 115,60" fill="url(#gold-grad)" opacity="0.9"/>
+                                <path d="M130,55 L135,70 L132,70" stroke="url(#gold-grad)" stroke-width="1.5" fill="none"/>
+                                <path d="M145,55 L147,60 L152,60 L148,63 L150,68 L145,65 L140,68 L142,63 L138,60 L143,60 Z" fill="#fbbf24"/>
+                                <path d="M55,60 L57,65 L62,65 L58,68 L60,73 L55,70 L50,73 L52,68 L48,65 L53,65 Z" fill="#fbbf24"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper bg-blue-light">
+                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-title" data-i18n="totalTeachers">គ្រូបង្រៀនសរុប</span>
+                                <h3 class="stat-value" id="stat-total">0</h3>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper bg-female-light">
+                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="#e056fd" stroke-width="2">
+                                    <path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.45 4.1-3.46 4.76L12 17.5l-1.54-5.74A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/>
+                                    <line x1="12" y1="18" x2="12" y2="22" />
+                                    <line x1="9" y1="20" x2="15" y2="20" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-title" data-i18n="femaleTeachers">គ្រូបង្រៀនជាស្ត្រី</span>
+                                <h3 class="stat-value text-female" id="stat-female">0</h3>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper bg-male-light">
+                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="#22a6f3" stroke-width="2">
+                                    <circle cx="10" cy="14" r="6" />
+                                    <line x1="15" y1="9" x2="21" y2="3" />
+                                    <polyline points="16 3 21 3 21 8" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-title" data-i18n="maleTeachers">គ្រូបង្រៀនជាបុរស</span>
+                                <h3 class="stat-value text-male" id="stat-male">0</h3>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper bg-green-light">
+                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="#2ed573" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-title" data-i18n="activeStatus">កំពុងបង្រៀន</span>
+                                <h3 class="stat-value text-green" id="stat-active">0</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Analytics Panels -->
+                    <div class="analytics-row">
+                        <!-- Chart Card -->
+                        <div class="analytics-card flex-2">
+                            <div class="card-header">
+                                <h3 data-i18n="subjectChartTitle">ស្ថិតិគ្រូបង្រៀនតាមមុខវិជ្ជា</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="subjects-chart-bars">
+                                    <!-- Dynamic bars rendered via CSS/JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info Card (Status & Quick insights) -->
+                        <div class="analytics-card flex-1">
+                            <div class="card-header">
+                                <h3 data-i18n="quickStats">ស្ថិតិសង្ខេបបន្ថែម</h3>
+                            </div>
+                            <div class="card-body">
+                                <ul class="insight-list">
+                                    <li>
+                                        <span class="insight-label" data-i18n="avgExp">បទពិសោធន៍បង្រៀនមធ្យម</span>
+                                        <span class="insight-value" id="insight-avg-exp">0 ឆ្នាំ</span>
+                                    </li>
+                                    <li>
+                                        <span class="insight-label" data-i18n="onLeaveStatus">កំពុងសម្រាកច្បាប់</span>
+                                        <span class="insight-value text-orange" id="insight-leave">0 នាក់</span>
+                                    </li>
+                                    <li>
+                                        <span class="insight-label" data-i18n="techLeads">ប្រធានក្រុមបច្ចេកទេស</span>
+                                        <span class="insight-value text-gold" id="insight-leads">0 នាក់</span>
+                                    </li>
+                                </ul>
+                                
+                                <div class="school-mission">
+                                    <h4 data-i18n="schoolMottoTitle">បាវចនាសាលា</h4>
+                                    <p data-i18n="schoolMotto">"វិន័យ គុណភាព គុណធម៌ នវានុវត្តន៍"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. TEACHERS DIRECTORY PAGE -->
+                <section id="page-teachers" class="app-page admin-only">
+                    <!-- Filters and Search Toolbar -->
+                    <div class="toolbar-card">
+                        <div class="search-box">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="search-input" placeholder="ស្វែងរកតាមឈ្មោះគ្រូ ឬលេខទូរស័ព្ទ..." data-i18n-placeholder="searchPlaceholder">
+                        </div>
+                        
+                        <div class="filter-controls">
+                            <!-- Filter Subject -->
+                            <select id="filter-subject" class="select-control">
+                                <option value="" data-i18n="allSubjects">-- គ្រប់មុខវិជ្ជា --</option>
+                                <option value="គណិតវិទ្យា">គណិតវិទ្យា (Math)</option>
+                                <option value="អក្សរសាស្ត្រខ្មែរ">អក្សរសាស្ត្រខ្មែរ (Khmer)</option>
+                                <option value="រូបវិទ្យា">រូបវិទ្យា (Physics)</option>
+                                <option value="គីមីវិទ្យា">គីមីវិទ្យា (Chemistry)</option>
+                                <option value="ជីវវិទ្យា">ជីវវិទ្យា (Biology)</option>
+                                <option value="ប្រវត្តិវិទ្យា">ប្រវត្តិវិទ្យា (History)</option>
+                                <option value="ភូមិវិទ្យា">ភូមិវិទ្យា (Geography)</option>
+                                <option value="សីលធម៌-ពលរដ្ឋវិទ្យា">សីលធម៌-ពលរដ្ឋវិទ្យា (Civics)</option>
+                                <option value="ផែនដីវិទ្យា">ផែនដីវិទ្យា (Earth)</option>
+                                <option value="គេហវិទ្យា">គេហវិទ្យា (Home Ec)</option>
+                                <option value="ភាសាបរទេស">ភាសាបរទេស (Language)</option>
+                                <option value="ព័ត៌មានវិទ្យា">ព័ត៌មានវិទ្យា (ICT)</option>
+                                <option value="កាយវប្បកម្ម-កីឡា">កាយវប្បកម្ម-កីឡា (PE)</option>
+                            </select>
+                            
+                            <!-- Filter Gender -->
+                            <select id="filter-gender" class="select-control">
+                                <option value="" data-i18n="allGenders">-- គ្រប់ភេទ --</option>
+                                <option value="M" data-i18n="genderMale">ប្រុស</option>
+                                <option value="F" data-i18n="genderFemale">ស្រី</option>
+                            </select>
+
+                            <!-- Filter Status -->
+                            <select id="filter-status" class="select-control">
+                                <option value="" data-i18n="allStatus">-- គ្រប់ស្ថានភាព --</option>
+                                <option value="Active" data-i18n="statusActive">កំពុងបង្រៀន</option>
+                                <option value="On Leave" data-i18n="statusLeave">ច្បាប់</option>
+                            </select>
+                            
+                            <button id="btn-clear-filters" class="btn btn-secondary" title="សម្អាតតម្រង">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 4H1L10 14v6l4 2v-8L23 4z"/>
+                                </svg>
+                                <span data-i18n="clearFilters">សម្អាត</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Directory Output Table/Grid -->
+                    <div class="data-table-container">
+                        <table class="data-table" id="teachers-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-id" data-sort="id">អត្តលេខ <span class="sort-icon">↕</span></th>
+                                    <th class="col-name" data-sort="nameKh">គោត្តនាម-នាមខ្លួន <span class="sort-icon">↕</span></th>
+                                    <th class="col-gender" data-sort="gender">ភេទ <span class="sort-icon">↕</span></th>
+                                    <th class="col-subject" data-sort="subject">មុខវិជ្ជា <span class="sort-icon">↕</span></th>
+                                    <th class="col-grade" data-sort="grade">បង្រៀនថ្នាក់ <span class="sort-icon">↕</span></th>
+                                    <th class="col-position" data-sort="position">តួនាទី <span class="sort-icon">↕</span></th>
+                                    <th class="col-status" data-sort="status">ស្ថានភាព <span class="sort-icon">↕</span></th>
+                                    <th class="col-actions" data-i18n="actionsHeader">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teachers-table-body">
+                                <!-- Loaded dynamically via app.js -->
+                            </tbody>
+                        </table>
+                        
+                        <!-- Empty list view -->
+                        <div class="empty-state hidden" id="table-empty-state">
+                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                            </svg>
+                            <h4 data-i18n="noResults">រកមិនឃើញទិន្នន័យគ្រូបង្រៀនទេ</h4>
+                            <p data-i18n="noResultsSub">សូមកែប្រែពាក្យគន្លឹះ ឬលក្ខខណ្ឌស្វែងរកឡើងវិញ</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. ADD/EDIT TEACHER PAGE -->
+                <section id="page-add-teacher" class="app-page admin-only">
+                    <div class="form-container-card">
+                        <div class="form-header">
+                            <h3 id="form-title" data-i18n="formTitleAdd">បញ្ចូលព័ត៌មានគ្រូបង្រៀនថ្មី</h3>
+                            <p data-i18n="formSub">សូមបំពេញព័ត៌មានលម្អិតខាងក្រោមឱ្យបានត្រឹមត្រូវ។ ព័ត៌មានដែលមានសញ្ញា (*) គឺចាំបាច់ត្រូវបំពេញ។</p>
+                        </div>
+                        
+                        <form id="teacher-form" novalidate>
+                            <input type="hidden" id="teacher-id-hidden">
+                            
+                            <div class="form-grid">
+                                <!-- Khmer Name -->
+                                <div class="form-group">
+                                    <label for="input-name-kh" class="form-label"><span data-i18n="labelNameKh">ឈ្មោះភាសាខ្មែរ</span> <span class="required">*</span></label>
+                                    <input type="text" id="input-name-kh" class="form-input" required placeholder="ឧ. សុខ ជា">
+                                    <span class="error-msg" id="err-name-kh"></span>
+                                </div>
+
+                                <!-- English Name -->
+                                <div class="form-group">
+                                    <label for="input-name-en" class="form-label"><span data-i18n="labelNameEn">ឈ្មោះឡាតាំង</span> <span class="required">*</span></label>
+                                    <input type="text" id="input-name-en" class="form-input" required placeholder="ឧ. Sok Chea">
+                                    <span class="error-msg" id="err-name-en"></span>
+                                </div>
+
+                                <!-- Gender -->
+                                <div class="form-group">
+                                    <label for="input-gender" class="form-label"><span data-i18n="labelGender">ភេទ</span> <span class="required">*</span></label>
+                                    <select id="input-gender" class="form-select" required>
+                                        <option value="" data-i18n="selectGender">-- ជ្រើសរើសភេទ --</option>
+                                        <option value="M" data-i18n="genderMale">ប្រុស</option>
+                                        <option value="F" data-i18n="genderFemale">ស្រី</option>
+                                    </select>
+                                    <span class="error-msg" id="err-gender"></span>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="form-group">
+                                    <label for="input-dob" class="form-label"><span data-i18n="labelDob">ថ្ងៃខែឆ្នាំកំណើត</span></label>
+                                    <input type="date" id="input-dob" class="form-input">
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="form-group">
+                                    <label for="input-phone" class="form-label"><span data-i18n="labelPhone">លេខទូរស័ព្ទ</span> <span class="required">*</span></label>
+                                    <input type="tel" id="input-phone" class="form-input" required placeholder="ឧ. 012 345 678">
+                                    <span class="error-msg" id="err-phone"></span>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label for="input-email" class="form-label"><span data-i18n="labelEmail">អ៊ីមែល</span></label>
+                                    <input type="email" id="input-email" class="form-input" placeholder="example@email.com">
+                                    <span class="error-msg" id="err-email"></span>
+                                </div>
+
+                                <!-- Subject -->
+                                <div class="form-group">
+                                    <label for="input-subject" class="form-label"><span data-i18n="labelSubject">មុខវិជ្ជាបង្រៀន</span> <span class="required">*</span></label>
+                                    <select id="input-subject" class="form-select" required>
+                                        <option value="" data-i18n="selectSubject">-- ជ្រើសរើសមុខវិជ្ជា --</option>
+                                        <option value="គណិតវិទ្យា">គណិតវិទ្យា (Mathematics)</option>
+                                        <option value="អក្សរសាស្ត្រខ្មែរ">អក្សរសាស្ត្រខ្មែរ (Khmer Literature)</option>
+                                        <option value="រូបវិទ្យា">រូបវិទ្យា (Physics)</option>
+                                        <option value="គីមីវិទ្យា">គីមីវិទ្យា (Chemistry)</option>
+                                        <option value="ជីវវិទ្យា">ជីវវិទ្យា (Biology)</option>
+                                        <option value="ប្រវត្តិវិទ្យា">ប្រវត្តិវិទ្យា (History)</option>
+                                        <option value="ភូមិវិទ្យា">ភូមិវិទ្យា (Geography)</option>
+                                        <option value="សីលធម៌-ពលរដ្ឋវិទ្យា">សីលធម៌-ពលរដ្ឋវិទ្យា (Morality-Civics)</option>
+                                        <option value="ផែនដីវិទ្យា">ផែនដីវិទ្យា (Earth Science)</option>
+                                        <option value="គេហវិទ្យា">គេហវិទ្យា (Home Economics)</option>
+                                        <option value="ភាសាបរទេស">ភាសាបរទេស (Foreign Language)</option>
+                                        <option value="ព័ត៌មានវិទ្យា">ព័ត៌មានវិទ្យា (ICT)</option>
+                                        <option value="កាយវប្បកម្ម-កីឡា">កាយវប្បកម្ម-កីឡា (Physical Education)</option>
+                                    </select>
+                                    <span class="error-msg" id="err-subject"></span>
+                                </div>
+
+                                <!-- Class/Grade -->
+                                <div class="form-group">
+                                    <label for="input-grade" class="form-label" data-i18n="labelGrade">ទទួលបន្ទុកថ្នាក់</label>
+                                    <input type="text" id="input-grade" class="form-input" placeholder="ឧ. 12A ឬ គ្មាន">
+                                    <span class="error-msg" id="err-grade"></span>
+                                </div>
+
+                                <!-- Position -->
+                                <div class="form-group">
+                                    <label for="input-position" class="form-label"><span data-i18n="labelPosition">តួនាទី</span> <span class="required">*</span></label>
+                                    <select id="input-position" class="form-select" required>
+                                        <option value="" data-i18n="selectPosition">-- ជ្រើសរើសតួនាទី --</option>
+                                        <option value="គ្រូបង្រៀន" data-i18n="posTeacher">គ្រូបង្រៀន</option>
+                                        <option value="ប្រធានក្រុមបច្ចេកទេស" data-i18n="posTechLead">ប្រធានក្រុមបច្ចេកទេស</option>
+                                        <option value="អនុប្រធានក្រុមកម្រិត" data-i18n="posViceLead">អនុប្រធានក្រុមកម្រិត</option>
+                                    </select>
+                                    <span class="error-msg" id="err-position"></span>
+                                </div>
+
+                                <!-- Experience Years -->
+                                <div class="form-group">
+                                    <label for="input-experience" class="form-label"><span data-i18n="labelExperience">បទពិសោធន៍ការងារ (ឆ្នាំ)</span></label>
+                                    <input type="number" id="input-experience" class="form-input" min="0" max="50" placeholder="0">
+                                </div>
+
+                                <!-- Status -->
+                                <div class="form-group">
+                                    <label for="input-status" class="form-label"><span data-i18n="labelStatus">ស្ថានភាពបច្ចុប្បន្ន</span> <span class="required">*</span></label>
+                                    <select id="input-status" class="form-select" required>
+                                        <option value="Active" data-i18n="statusActive">កំពុងបង្រៀន</option>
+                                        <option value="On Leave" data-i18n="statusLeave">ច្បាប់</option>
+                                    </select>
+                                </div>
+
+                                <!-- Join Date -->
+                                <div class="form-group">
+                                    <label for="input-join-date" class="form-label"><span data-i18n="labelJoinDate">ថ្ងៃចូលបម្រើការងារ</span></label>
+                                    <input type="date" id="input-join-date" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="btn-form-cancel" data-i18n="btnCancel">បោះបង់</button>
+                                <button type="submit" class="btn btn-primary" id="btn-form-submit">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                                        <polyline points="17 21 17 13 7 13 7 21"/>
+                                        <polyline points="7 3 7 8 15 8"/>
+                                    </svg>
+                                    <span data-i18n="btnSave">រក្សាទុក</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 4. CLASS MONITOR ATTENDANCE PAGE -->
+                <section id="page-attendance" class="app-page">
+                    <div class="form-container-card" style="max-width: 600px;">
+                        <div class="form-header">
+                            <h3 data-i18n="attendanceFormTitle">កត់ត្រាអវត្តមានគ្រូបង្រៀន</h3>
+                            <p data-i18n="attendanceFormSub">សម្រាប់ប្រធានថ្នាក់ស្រង់វត្តមានគ្រូបង្រៀនប្រចាំថ្ងៃ។ ទិន្នន័យនឹងត្រូវសមកាលកម្មទៅកាន់ការិយាល័យកណ្តាល។</p>
+                        </div>
+                        
+                        <form id="attendance-form" novalidate>
+                            <div style="display: flex; flex-direction: column; gap: 20px;">
+                                <!-- Class Selector -->
+                                <div class="form-group">
+                                    <label for="att-class" class="form-label"><span data-i18n="labelAttClass">ថ្នាក់របស់អ្នក</span> <span class="required">*</span></label>
+                                    <select id="att-class" class="form-select" required>
+                                        <option value="">-- ជ្រើសរើសថ្នាក់ --</option>
+                                        <!-- Grade 7 -->
+                                        <option value="7A">ថ្នាក់ទី 7A (Grade 7A)</option>
+                                        <option value="7B">ថ្នាក់ទី 7B (Grade 7B)</option>
+                                        <option value="7C">ថ្នាក់ទី 7C (Grade 7C)</option>
+                                        <option value="7D">ថ្នាក់ទី 7D (Grade 7D)</option>
+                                        <!-- Grade 8 -->
+                                        <option value="8A">ថ្នាក់ទី 8A (Grade 8A)</option>
+                                        <option value="8B">ថ្នាក់ទី 8B (Grade 8B)</option>
+                                        <option value="8C">ថ្នាក់ទី 8C (Grade 8C)</option>
+                                        <option value="8D">ថ្នាក់ទី 8D (Grade 8D)</option>
+                                        <!-- Grade 9 -->
+                                        <option value="9A">ថ្នាក់ទី 9A (Grade 9A)</option>
+                                        <option value="9B">ថ្នាក់ទី 9B (Grade 9B)</option>
+                                        <option value="9C">ថ្នាក់ទី 9C (Grade 9C)</option>
+                                        <option value="9D">ថ្នាក់ទី 9D (Grade 9D)</option>
+                                        <!-- Grade 10 -->
+                                        <option value="10A">ថ្នាក់ទី 10A (Grade 10A)</option>
+                                        <option value="10B">ថ្នាក់ទី 10B (Grade 10B)</option>
+                                        <option value="10C">ថ្នាក់ទី 10C (Grade 10C)</option>
+                                        <option value="10D">ថ្នាក់ទី 10D (Grade 10D)</option>
+                                        <option value="10E">ថ្នាក់ទី 10E (Grade 10E)</option>
+                                        <option value="10F">ថ្នាក់ទី 10F (Grade 10F)</option>
+                                        <!-- Grade 11 -->
+                                        <option value="11A">ថ្នាក់ទី 11A (Grade 11A)</option>
+                                        <option value="11B">ថ្នាក់ទី 11B (Grade 11B)</option>
+                                        <option value="11C">ថ្នាក់ទី 11C (Grade 11C)</option>
+                                        <option value="11D">ថ្នាក់ទី 11D (Grade 11D)</option>
+                                        <option value="11E">ថ្នាក់ទី 11E (Grade 11E)</option>
+                                        <option value="11F">ថ្នាក់ទី 11F (Grade 11F)</option>
+                                        <!-- Grade 12 -->
+                                        <option value="12A">ថ្នាក់ទី 12A (Grade 12A)</option>
+                                        <option value="12B">ថ្នាក់ទី 12B (Grade 12B)</option>
+                                        <option value="12C">ថ្នាក់ទី 12C (Grade 12C)</option>
+                                        <option value="12D">ថ្នាក់ទី 12D (Grade 12D)</option>
+                                        <option value="12E">ថ្នាក់ទី 12E (Grade 12E)</option>
+                                        <option value="12F">ថ្នាក់ទី 12F (Grade 12F)</option>
+                                    </select>
+                                    <span class="error-msg" id="err-att-class"></span>
+                                </div>
+
+                                <!-- Teacher Selector -->
+                                <div class="form-group">
+                                    <label for="att-teacher" class="form-label"><span data-i18n="labelAttTeacher">គ្រូបង្រៀន</span> <span class="required">*</span></label>
+                                    <select id="att-teacher" class="form-select" required>
+                                        <option value="" data-i18n="selectTeacher">-- ជ្រើសរើសគ្រូបង្រៀន --</option>
+                                        <!-- Loaded dynamically -->
+                                    </select>
+                                    <span class="error-msg" id="err-att-teacher"></span>
+                                </div>
+
+                                <!-- Subject Display (Read only, filled automatically) -->
+                                <!-- Subject Selector (Editable dropdown, defaults automatically) -->
+                                <div class="form-group">
+                                     <label for="att-subject" class="form-label"><span data-i18n="labelSubject">មុខវិជ្ជាបង្រៀន</span> <span class="required">*</span></label>
+                                     <select id="att-subject" class="form-select" required>
+                                         <option value="" data-i18n="selectSubject">-- ជ្រើសរើសមុខវិជ្ជា --</option>
+                                         <!-- Loaded dynamically -->
+                                     </select>
+                                 </div>
+
+
+                                <!-- Date & Study Hour Grid -->
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                    <!-- Date Input -->
+                                    <div class="form-group">
+                                        <label for="att-date" class="form-label"><span data-i18n="labelAttDate">កាលបរិច្ឆេទ</span> <span class="required">*</span></label>
+                                        <input type="date" id="att-date" class="form-input" required>
+                                        <span class="error-msg" id="err-att-date"></span>
+                                    </div>
+
+                                    <!-- Study Hour Selector -->
+                                    <div class="form-group">
+                                        <label for="att-hour" class="form-label"><span data-i18n="labelAttHour">ម៉ោងសិក្សា</span> <span class="required">*</span></label>
+                                        <select id="att-hour" class="form-select" required>
+                                            <option value="" data-i18n="selectHour">-- ជ្រើសរើសម៉ោង --</option>
+                                            <option value="7-8">ព្រឹក: 7:00 - 8:00 (7-8)</option>
+                                            <option value="8-9">ព្រឹក: 8:00 - 9:00 (8-9)</option>
+                                            <option value="9-10">ព្រឹក: 9:00 - 10:00 (9-10)</option>
+                                            <option value="10-11">ព្រឹក: 10:00 - 11:00 (10-11)</option>
+                                            <option value="2-3">រសៀល: 2:00 - 3:00 (2-3)</option>
+                                            <option value="3-4">រសៀល: 3:00 - 4:00 (3-4)</option>
+                                        </select>
+                                        <span class="error-msg" id="err-att-hour"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Attendance Status Card Radio Grid -->
+                                <div class="form-group">
+                                    <label class="form-label"><span data-i18n="labelStatus">ស្ថានភាពបច្ចុប្បន្ន</span> <span class="required">*</span></label>
+                                    <div class="attendance-status-cards">
+                                        <label class="att-card-radio success-border">
+                                            <input type="radio" name="att-status" value="Present" checked>
+                                            <div class="att-card-content">
+                                                <span class="att-card-title text-green" data-i18n="statusPresent">វត្តមាន</span>
+                                            </div>
+                                        </label>
+                                        <label class="att-card-radio warning-border">
+                                            <input type="radio" name="att-status" value="Late">
+                                            <div class="att-card-content">
+                                                <span class="att-card-title text-orange" data-i18n="statusLate">មកយឺត</span>
+                                            </div>
+                                        </label>
+                                        <label class="att-card-radio danger-border">
+                                            <input type="radio" name="att-status" value="Absent">
+                                            <div class="att-card-content">
+                                                <span class="att-card-title text-danger" data-i18n="statusAbsent">អវត្តមាន</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Class Monitor PIN (Optional security check) -->
+                                <div class="form-group" id="pin-group">
+                                    <label for="att-pin" class="form-label"><span data-i18n="labelAttPin">លេខកូដប្រធានថ្នាក់ (PIN)</span> <span class="required">*</span></label>
+                                    <input type="password" id="att-pin" class="form-input" placeholder="កូដលំនាំដើម: 1234" maxlength="4" style="letter-spacing: 3px; font-family: var(--font-english); font-weight: bold; text-align: center;">
+                                    <span class="error-msg" id="err-att-pin"></span>
+                                </div>
+
+                                <!-- Notes / Reason -->
+                                <div class="form-group">
+                                    <label for="att-notes" class="form-label" data-i18n="labelNotes">មូលហេតុ ឬកំណត់សម្គាល់ផ្សេងៗ</label>
+                                    <textarea id="att-notes" class="form-input" rows="3" placeholder="ឧ. គ្រូបង្រៀនមកយឺត ១៥នាទី ឬ គ្រូសុំច្បាប់ឈឺ..." style="resize: vertical; font-family: inherit; font-size: 13px;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="btn-submit-attendance" style="width: 100%; justify-content: center; padding: 12px;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 2L11 13"/>
+                                        <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                                    </svg>
+                                    <span data-i18n="btnSubmitAttendance">រក្សាទុកការស្រង់វត្តមាន</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 5. ADMIN ATTENDANCE LOGS PAGE -->
+                <section id="page-attendance-logs" class="app-page admin-only">
+                    <!-- Print Header (Visible only when printing) -->
+                    <div class="print-header">
+                        <div class="print-kingdom" style="float: right; text-align: center; line-height: 1.6;">
+                            <strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br>
+                            <strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br>
+                            <span style="font-family: 'Kantumruy Pro', cursive; font-size: 14px; letter-spacing: 2px;">55555</span>
+                        </div>
+                        <div class="print-school-details" style="float: left; text-align: left; line-height: 1.6;">
+                            មន្ទីរអប់រំ យុវជន និងកីឡាខេត្តបន្ទាយមានជ័យ<br>
+                            <strong>វិទ្យាល័យសម្ដេចឪ</strong>
+                        </div>
+                        <div class="print-report-title" style="clear: both; padding-top: 30px; text-align: center;">
+                            <h3 style="font-size: 20px; font-weight: 700; margin-top: 10px;">របាយការណ៍ស្រង់វត្តមានបុគ្គលិក និងគ្រូបង្រៀនប្រចាំខែ <span id="print-title-month">ខែកក្កដា</span></h3>
+                            <p style="font-size: 13px; margin-top: 6px;">
+                                ឆ្នាំសិក្សា ៖ <span id="print-year-val" style="font-family: var(--font-english);">២០២៦-២០២៧</span> 
+                                <span style="margin-left: 20px;">ថ្នាក់ ៖ <span id="print-class-val">គ្រប់ថ្នាក់</span></span>
+                                <span style="margin-left: 20px;">ស្ថានភាព ៖ <span id="print-status-val">គ្រប់ស្ថានភាព</span></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-card">
+                        <div class="filter-controls" style="width: 100%; justify-content: space-between; flex-wrap: wrap;">
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <select id="log-filter-class" class="select-control">
+                                    <option value="">-- គ្រប់ថ្នាក់ --</option>
+                                    <option value="7A">ថ្នាក់ទី 7A</option>
+                                    <option value="7B">ថ្នាក់ទី 7B</option>
+                                    <option value="7C">ថ្នាក់ទី 7C</option>
+                                    <option value="7D">ថ្នាក់ទី 7D</option>
+                                    <option value="8A">ថ្នាក់ទី 8A</option>
+                                    <option value="8B">ថ្នាក់ទី 8B</option>
+                                    <option value="8C">ថ្នាក់ទី 8C</option>
+                                    <option value="8D">ថ្នាក់ទី 8D</option>
+                                    <option value="9A">ថ្នាក់ទី 9A</option>
+                                    <option value="9B">ថ្នាក់ទី 9B</option>
+                                    <option value="9C">ថ្នាក់ទី 9C</option>
+                                    <option value="9D">ថ្នាក់ទី 9D</option>
+                                    <option value="10A">ថ្នាក់ទី 10A</option>
+                                    <option value="10B">ថ្នាក់ទី 10B</option>
+                                    <option value="10C">ថ្នាក់ទី 10C</option>
+                                    <option value="10D">ថ្នាក់ទី 10D</option>
+                                    <option value="10E">ថ្នាក់ទី 10E</option>
+                                    <option value="10F">ថ្នាក់ទី 10F</option>
+                                    <option value="11A">ថ្នាក់ទី 11A</option>
+                                    <option value="11B">ថ្នាក់ទី 11B</option>
+                                    <option value="11C">ថ្នាក់ទី 11C</option>
+                                    <option value="11D">ថ្នាក់ទី 11D</option>
+                                    <option value="11E">ថ្នាក់ទី 11E</option>
+                                    <option value="11F">ថ្នាក់ទី 11F</option>
+                                    <option value="12A">ថ្នាក់ទី 12A</option>
+                                    <option value="12B">ថ្នាក់ទី 12B</option>
+                                    <option value="12C">ថ្នាក់ទី 12C</option>
+                                    <option value="12D">ថ្នាក់ទី 12D</option>
+                                    <option value="12E">ថ្នាក់ទី 12E</option>
+                                    <option value="12F">ថ្នាក់ទី 12F</option>
+                                </select>
+                                <select id="log-filter-year" class="select-control" style="font-family: var(--font-english);">
+                                    <option value="" data-i18n="allYears">-- គ្រប់ឆ្នាំសិក្សា --</option>
+                                    <option value="2025-2026">2025-2026</option>
+                                    <option value="2026-2027">2026-2027</option>
+                                    <option value="2027-2028">2027-2028</option>
+                                    <option value="2028-2029">2028-2029</option>
+                                </select>
+                                <select id="log-filter-month" class="select-control">
+                                    <option value="01">ខែមករា (January)</option>
+                                    <option value="02">ខែកុម្ភៈ (February)</option>
+                                    <option value="03">ខែមីនា (March)</option>
+                                    <option value="04">ខែមេសា (April)</option>
+                                    <option value="05">ខែឧសភា (May)</option>
+                                    <option value="06">ខែមិថុនា (June)</option>
+                                    <option value="07">ខែកក្កដា (July)</option>
+                                    <option value="08">ខែសីហា (August)</option>
+                                    <option value="09">ខែកញ្ញា (September)</option>
+                                    <option value="10">ខែតុលា (October)</option>
+                                    <option value="11">ខែវិច្ឆិកា (November)</option>
+                                    <option value="12">ខែធ្នូ (December)</option>
+                                </select>
+                                <select id="log-filter-status" class="select-control">
+                                    <option value="">-- គ្រប់ស្ថានភាព --</option>
+                                    <option value="Present" data-i18n="statusPresent">វត្តមាន</option>
+                                    <option value="Late" data-i18n="statusLate">មកយឺត</option>
+                                    <option value="Absent" data-i18n="statusAbsent">អវត្តមាន</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <button id="btn-clear-log-filters" class="btn btn-secondary">
+                                    <span data-i18n="clearFilters">សម្អាត</span>
+                                </button>
+                                <button id="btn-print-logs" class="btn btn-primary">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9"/>
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                        <rect x="6" y="14" width="12" height="8"/>
+                                    </svg>
+                                    <span data-i18n="btnPrintReport">បោះពុម្ពរបាយការណ៍</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Absentee Summary Section -->
+                    <div id="absentee-summary-card" class="toolbar-card hidden" style="margin-bottom: 20px; padding: 20px; border-left: 4px solid #ef4444;">
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #ef4444;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span data-i18n="absenteeSummaryTitle">សេចក្តីសង្ខេបគ្រូអវត្តមានប្រចាំខែ</span>
+                        </h4>
+                        <div id="absentee-summary-content">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <table class="data-table" id="logs-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 160px;">កាលបរិច្ឆេទ</th>
+                                    <th style="width: 80px;">ថ្នាក់</th>
+                                    <th>គ្រូបង្រៀន</th>
+                                    <th>មុខវិជ្ជា</th>
+                                    <th style="width: 110px;">ស្ថានភាព</th>
+                                    <th>កំណត់សម្គាល់</th>
+                                    <th style="width: 120px;">សមកាលកម្ម Sheet</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-table-body">
+                                <!-- Loaded dynamically via app.js -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="empty-state hidden" id="logs-empty-state">
+                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                            </svg>
+                            <h4 data-i18n="noResults">មិនទាន់មានកំណត់ត្រាអវត្តមានទេ</h4>
+                            <p data-i18n="noResultsSub">ទិន្នន័យស្រង់អវត្តមានរបស់ប្រធានថ្នាក់នឹងបង្ហាញនៅទីនេះ។</p>
+                        </div>
+                    </div>
+
+                    <!-- Print Footer (Visible only when printing) -->
+                    <div class="print-footer" style="margin-top: 50px; width: 100%; display: none;">
+                        <div class="signature-block signature-left" style="float: left; width: 45%; text-align: center; line-height: 1.8;">
+                            បានឃើញ និងឯកភាព<br>
+                            <strong>នាយកវិទ្យាល័យ</strong>
+                        </div>
+                        <div class="signature-block signature-right" style="float: right; width: 45%; text-align: center; line-height: 1.8;">
+                            ថ្ងៃទី....... ខែ....... ឆ្នាំ ២០២៦<br>
+                            <strong>អ្នករៀបចំរបាយការណ៍</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. SETTINGS & BACKUP PAGE -->
+                <section id="page-settings" class="app-page admin-only">
+                    <div class="settings-grid">
+                        <!-- Data Management Settings -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3 data-i18n="backupTitle">ការគ្រប់គ្រង និងរក្សាទុកទិន្នន័យ</h3>
+                            </div>
+                            <div class="card-body settings-card-body">
+                                <!-- Google Sheets Webhook configuration -->
+                                <div class="settings-action-item" style="flex-direction: column; align-items: stretch; gap: 12px; border-left: 4px solid var(--primary-color);">
+                                    <div class="action-info">
+                                        <h4 data-i18n="sheetsConfigTitle">ការភ្ជាប់ជាមួយ Google Sheets (Cloud Sync)</h4>
+                                        <p data-i18n="sheetsConfigDesc">បញ្ចូលតំណភ្ជាប់ Google Apps Script Web App URL ដើម្បីសមកាលកម្មទិន្នន័យអវត្តមានស្វ័យប្រវត្តិ។</p>
+                                    </div>
+                                    <div style="display: flex; gap: 12px; margin-top: 8px;">
+                                        <input type="url" id="settings-sheets-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec" style="font-family: var(--font-english); font-size: 12px;">
+                                        <button id="btn-save-sheets-url" class="btn btn-primary" style="padding: 10px 16px;">
+                                            <span data-i18n="btnSave">រក្សាទុក</span>
+                                        </button>
+                                    </div>
+                                    <div id="sheets-connection-status" style="font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+                                        <!-- Filled by app.js -->
+                                    </div>
+                                </div>
+
+                                <p class="settings-desc" data-i18n="backupDesc">រក្សាទុកទិន្នន័យគ្រូបង្រៀនទាំងអស់របស់អ្នក ឬស្តារទិន្នន័យត្រឡប់មកវិញតាមរយៈឯកសារកុំព្យូទ័រ (JSON)។</p>
+                                
+                                <div class="settings-actions">
+                                    <!-- Export -->
+                                    <div class="settings-action-item">
+                                        <div class="action-info">
+                                            <h4 data-i18n="exportTitle">ទាញយកទិន្នន័យ (Backup/Export)</h4>
+                                            <p data-i18n="exportDesc">ទាញយកទិន្នន័យគ្រូបង្រៀនទាំងអស់មករក្សាទុកក្នុងឯកសារ JSON លើម៉ាស៊ីនរបស់អ្នក។</p>
+                                        </div>
+                                        <button id="btn-export" class="btn btn-primary">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <polyline points="7 10 12 15 17 10"/>
+                                                <line x1="12" y1="15" x2="12" y2="3"/>
+                                            </svg>
+                                            <span data-i18n="btnExport">ទាញយកទិន្នន័យ</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Import -->
+                                    <div class="settings-action-item">
+                                        <div class="action-info">
+                                            <h4 data-i18n="importTitle">បញ្ចូលទិន្នន័យឡើងវិញ (Restore/Import)</h4>
+                                            <p data-i18n="importDesc">ជ្រើសរើសឯកសារទិន្នន័យ JSON ដែលបានរក្សាទុកពីមុន ដើម្បីបញ្ចូលទៅក្នុងប្រព័ន្ធឡើងវិញ។</p>
+                                        </div>
+                                        <div class="import-file-wrapper">
+                                            <input type="file" id="import-file-input" accept=".json" class="hidden-file-input">
+                                            <button id="btn-trigger-import" class="btn btn-secondary">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                    <polyline points="17 8 12 3 7 8"/>
+                                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                                </svg>
+                                                <span data-i18n="btnImport">បញ្ចូលទិន្នន័យ</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Reset to default -->
+                                    <div class="settings-action-item danger-border">
+                                        <div class="action-info">
+                                            <h4 class="text-danger" data-i18n="resetTitle">កំណត់ឡើងវិញរោងចក្រ (Reset Database)</h4>
+                                            <p data-i18n="resetDesc">លុបចោលទិន្នន័យដែលបានកែប្រែទាំងអស់ ហើយដាក់បញ្ចូលទិន្នន័យគំរូដើមរបស់សាលាមកវិញ។</p>
+                                        </div>
+                                        <button id="btn-reset-db" class="btn btn-danger">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M3 6h18"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                                <line x1="10" y1="11" x2="10" y2="17"/>
+                                                <line x1="14" y1="11" x2="14" y2="17"/>
+                                            </svg>
+                                            <span data-i18n="btnReset">សម្អាតទិន្នន័យឡើងវិញ</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Information & Setup Guide -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3 data-i18n="setupGuideTitle">របៀបដំឡើង Google Sheets Sync</h3>
+                            </div>
+                            <div class="card-body" style="font-size: 12px; line-height: 1.6; display: flex; flex-direction: column; gap: 12px;">
+                                <ol style="padding-left: 16px; display: flex; flex-direction: column; gap: 6px;">
+                                    <li>បង្កើត <strong>Google Sheet</strong> ថ្មីមួយលើ Google Drive របស់អ្នក។</li>
+                                    <li>បើក Sheet នោះរួចចូលទៅកាន់ <strong>Extensions > Apps Script</strong>។</li>
+                                    <li>លុបកូដចាស់ចោល រួចចម្លងកូដ Apps Script ខាងក្រោមដាក់ចូល៖
+                                        <pre style="background: var(--bg-app); border: 1px solid var(--border-color); padding: 8px; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 10px; margin-top: 4px;">
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    new Date(),           // 1. ពេលវេលាបញ្ជូនទិន្នន័យ (Submission Time)
+    data.academicYear,    // 2. ឆ្នាំសិក្សា (Academic Year)
+    data.date,            // 3. កាលបរិច្ឆេទអវត្តមាន (Absence Date)
+    data.studyHour,       // 4. ម៉ោងសិក្សា (Study Hour)
+    data.className,       // 5. ថ្នាក់ (Class Room)
+    data.teacherId,       // 6. អត្តលេខគ្រូ (Teacher ID)
+    data.teacherName,     // 7. ឈ្មោះគ្រូបង្រៀន (Teacher Name)
+    data.subject,         // 8. មុខវិជ្ជា (Subject)
+    data.status,          // 9. ស្ថានភាព (Status)
+    data.notes            // 10. កំណត់សម្គាល់ (Notes/Reasons)
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+                                    </li>
+                                    <li>ចុច <strong>Deploy > New deployment</strong>។ ជ្រើសរើសប្រភេទជា <strong>Web app</strong>។</li>
+                                    <li>កំណត់សិទ្ធិ Execute as: <strong>Me (your email)</strong> និង Who has access: <strong>Anyone</strong> (ចាំបាច់ណាស់) រួចចុច Deploy។</li>
+                                    <li>ចម្លងយក <strong>Web app URL</strong> មកដាក់ក្នុងប្រអប់កំណត់ខាងឆ្វេង រួចចុច Save។</li>
+                                </ol>
+                                <div class="school-photo-placeholder" style="height: 100px;">
+                                    <div class="cambodian-decor-pattern">
+                                        <span class="decor-text" data-i18n="cambodianMotto">ជាតិ សាសនា ព្រះមហាក្សត្រ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- 5. TEACHER PROFILE/CV MODAL VIEW -->
+    <div class="modal-overlay hidden" id="profile-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="btn-close-profile-modal">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="profile-modal-header">
+                <div class="profile-avatar" id="modal-profile-avatar">
+                    <!-- Initials or icon -->
+                    SC
+                </div>
+                <div class="profile-intro">
+                    <h3 id="modal-name-kh">សុខ ជា</h3>
+                    <h4 id="modal-name-en">Sok Chea</h4>
+                    <span class="badge" id="modal-position">ប្រធានក្រុមបច្ចេកទេស</span>
+                </div>
+            </div>
+            <div class="profile-modal-body">
+                <div class="profile-section-title" data-i18n="personalInfo">ព័ត៌មានផ្ទាល់ខ្លួន</div>
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelGender">ភេទ</span>
+                        <span class="info-val" id="modal-gender">ប្រុស</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelDob">ថ្ងៃខែឆ្នាំកំណើត</span>
+                        <span class="info-val" id="modal-dob">15-05-1985</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelPhone">លេខទូរស័ព្ទ</span>
+                        <span class="info-val" id="modal-phone">012 345 678</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelEmail">អ៊ីមែល</span>
+                        <span class="info-val" id="modal-email">sok.chea@email.com</span>
+                    </div>
+                </div>
+
+                <div class="profile-section-title" data-i18n="academicInfo">ព័ត៌មានបង្រៀន និងការងារ</div>
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelSubject">មុខវិជ្ជាបង្រៀន</span>
+                        <span class="info-val text-bold" id="modal-subject">គណិតវិទ្យា</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelGrade">ទទួលបន្ទុកថ្នាក់</span>
+                        <span class="info-val" id="modal-grade">ថ្នាក់ទី១២</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelJoinDate">ថ្ងៃចូលបម្រើការងារ</span>
+                        <span class="info-val" id="modal-join-date">01-10-2010</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="labelExperience">បទពិសោធន៍ការងារ</span>
+                        <span class="info-val" id="modal-experience">16 ឆ្នាំ</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <span class="info-label" data-i18n="labelStatus">ស្ថានភាពបច្ចុប្បន្ន</span>
+                        <span class="status-indicator" id="modal-status">កំពុងបង្រៀន</span>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-modal-footer">
+                <button class="btn btn-secondary" id="btn-modal-close" data-i18n="btnClose">បិទ</button>
+                <button class="btn btn-primary" id="btn-modal-edit">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    <span data-i18n="btnEdit">កែប្រែ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. CONFIRMATION DELETE MODAL -->
+    <div class="modal-overlay hidden" id="delete-modal">
+        <div class="modal-card modal-confirm">
+            <div class="confirm-header text-danger">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <h3 data-i18n="deleteConfirmTitle">បញ្ជាក់ការលុបទិន្នន័យ</h3>
+            </div>
+            <div class="confirm-body">
+                <p><span data-i18n="deleteConfirmDesc">តើអ្នកពិតជាចង់លុបទិន្នន័យគ្រូបង្រៀនឈ្មោះ</span> <strong id="delete-teacher-name">...</strong> <span data-i18n="deleteConfirmDesc2">នេះមែនទេ? ការលុបនេះមិនអាចយកមកវិញបានឡើយ។</span></p>
+            </div>
+            <div class="confirm-footer">
+                <button class="btn btn-secondary" id="btn-delete-cancel" data-i18n="btnCancel">បោះបង់</button>
+                <button class="btn btn-danger" id="btn-delete-confirm" data-i18n="btnConfirmDelete">យល់ព្រមលុប</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="teachers_data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
