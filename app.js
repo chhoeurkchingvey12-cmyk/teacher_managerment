@@ -312,7 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "គេហវិទ្យា",
         "ភាសាបរទេស",
         "ព័ត៌មានវិទ្យា",
-        "កាយវប្បកម្ម-កីឡា"
+        "កាយវប្បកម្ម-កីឡា",
+        "សេដ្ឋកិច្ច"
     ];
 
     const SUBJECT_TRANSLATIONS = {
@@ -328,7 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "គេហវិទ្យា": { km: "គេហវិទ្យា", en: "Home Economics" },
         "ភាសាបរទេស": { km: "ភាសាបរទេស", en: "Foreign Language" },
         "ព័ត៌មានវិទ្យា": { km: "ព័ត៌មានវិទ្យា", en: "ICT" },
-        "កាយវប្បកម្ម-កីឡា": { km: "កាយវប្បកម្ម-កីឡា", en: "Physical Education" }
+        "កាយវប្បកម្ម-កីឡា": { km: "កាយវប្បកម្ម-កីឡា", en: "Physical Education" },
+        "សេដ្ឋកិច្ច": { km: "សេដ្ឋកិច្ច", en: "Economics" }
     };
 
     const POSITION_TRANSLATIONS = {
@@ -1169,14 +1171,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".form-input, .form-select").forEach(input => input.classList.remove("invalid"));
 
             if (!inputNameKh.value.trim()) setError(inputNameKh, "err-name-kh", "validationErr");
-            if (!inputNameEn.value.trim()) setError(inputNameEn, "err-name-en", "validationErr");
             if (!inputGender.value) setError(inputGender, "err-gender", "validationErr");
 
             // Strip spaces, plus sign, hyphens, and parentheses for validation
             const rawPhone = inputPhone.value.trim().replace(/[\s\+\-\(\)]/g, "");
-            if (!rawPhone) {
-                setError(inputPhone, "err-phone", "validationErr");
-            } else if (!/^\d{9,12}$/.test(rawPhone)) {
+            if (rawPhone && !/^\d{9,12}$/.test(rawPhone)) {
                 setError(inputPhone, "err-phone", "phoneErr");
             }
 
@@ -1195,10 +1194,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const teacherData = {
                 nameKh: inputNameKh.value.trim(),
-                nameEn: inputNameEn.value.trim(),
+                nameEn: inputNameEn.value.trim() || "-",
                 gender: inputGender.value,
                 dob: inputDob.value || null,
-                phone: inputPhone.value.trim(),
+                phone: inputPhone.value.trim() || "-",
                 email: inputEmail.value.trim() || null,
                 subject: inputSubject.value,
                 grade: inputGrade.value.trim() || "-",
