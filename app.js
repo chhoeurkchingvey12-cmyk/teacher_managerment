@@ -1375,12 +1375,28 @@ document.addEventListener("DOMContentLoaded", () => {
             if (index !== -1) {
                 attendanceLogs[index].syncStatus = "Synced";
                 saveAttendanceLogs();
+                if (activePage === "#attendance-logs") {
+                    renderAttendanceLogs();
+                }
             }
             console.log("Attendance record synced successfully to Google Sheets!");
         } catch (error) {
             console.error("Failed to sync attendance record to Google Sheets", error);
         }
     }
+
+    function syncPendingLogs() {
+        if (navigator.onLine && sheetsUrl) {
+            attendanceLogs.filter(l => l.syncStatus === "Pending").forEach(log => {
+                syncAttendanceRecord(log);
+            });
+        }
+    }
+
+    window.addEventListener("online", () => {
+        console.log("Network online. Syncing pending logs...");
+        syncPendingLogs();
+    });
 
     // ---------------------------------------------------------
     // 13. ADMIN ATTENDANCE LOGS HISTORY TABLE
@@ -1933,6 +1949,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadData();
     initThemeAndLang();
     checkAuth();
+    syncPendingLogs();
     
     // Read starting hash or default
     const startingHash = window.location.hash || "#dashboard";
