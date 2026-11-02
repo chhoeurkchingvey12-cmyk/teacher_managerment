@@ -154,7 +154,22 @@ document.addEventListener("DOMContentLoaded", () => {
             roleMonitor: "ប្រធានថ្នាក់ (Monitor)",
             syncOk: "សមកាលកម្មរួច",
             syncPending: "រង់ចាំសមកាលកម្ម",
-            invalidPin: "លេខកូដប្រធានថ្នាក់មិនត្រឹមត្រូវទេ! (លំនាំដើម: 1234)",
+            invalidPin: "លេខកូដប្រធានថ្នាក់មិនត្រឹមត្រូវទេ!",
+            invalidClassPin: "លេខសម្ងាត់សម្រាប់ថ្នាក់នេះមិនត្រឹមត្រូវទេ!",
+            menuClassPins: "លេខសម្ងាត់គ្រប់ថ្នាក់",
+            btnViewClassPins: "🔑 លេខសម្ងាត់គ្រប់ថ្នាក់ (Class Passwords)",
+            btnViewClassPinsShort: "មើលលេខសម្ងាត់",
+            classPinsTitle: "លេខសម្ងាត់ប្រធានថ្នាក់គ្រប់ថ្នាក់",
+            classPinsSubtitle: "បញ្ជីលេខកូដសម្ងាត់ ៤ ខ្ទង់ សម្រាប់ប្រធានថ្នាក់ប្រើពេលស្រង់វត្តមាន",
+            classPinsSettingTitle: "លេខសម្ងាត់ប្រធានថ្នាក់ (Class Passwords)",
+            classPinsSettingDesc: "ពិនិត្យមើល ចម្លង ឬកែប្រែលេខកូដសម្ងាត់សម្រាប់ប្រធានថ្នាក់ទាំង ៣០ ថ្នាក់។",
+            copyAllPins: "ចម្លងបញ្ជីទាំងអស់",
+            toastPinCopied: "បានចម្លងលេខកូដសម្ងាត់!",
+            toastAllPinsCopied: "បានចម្លងបញ្ជីលេខកូដសម្ងាត់គ្រប់ថ្នាក់រួចរាល់!",
+            toastPinUpdated: "បានកែប្រែលេខសម្ងាត់ថ្នាក់ជោគជ័យ!",
+            toastPinsReset: "បានកំណត់លេខសម្ងាត់គ្រប់ថ្នាក់ទៅលំនាំដើមវិញជោគជ័យ!",
+            promptEditPin: "បញ្ចូលលេខសម្ងាត់ថ្មី (៤ ខ្ទង់) សម្រាប់ថ្នាក់",
+            confirmResetPins: "តើលោកគ្រូពិតជាចង់កំណត់លេខសម្ងាត់គ្រប់ថ្នាក់ ទៅជាតម្លៃលំនាំដើមវិញមែនទេ?",
 
             // Toasts & JS Alerts
             toastSaveSuccess: "រក្សាទុកទិន្នន័យបានជោគជ័យ!",
@@ -279,7 +294,22 @@ document.addEventListener("DOMContentLoaded", () => {
             roleMonitor: "Class Monitor",
             syncOk: "Synced",
             syncPending: "Pending Sync",
-            invalidPin: "Invalid Class Monitor PIN! (Default is 1234)",
+            invalidPin: "Invalid Class Monitor PIN!",
+            invalidClassPin: "Invalid password for this class!",
+            menuClassPins: "Class Passwords",
+            btnViewClassPins: "🔑 Class Passwords (All Grades)",
+            btnViewClassPinsShort: "View Passwords",
+            classPinsTitle: "Class Monitor Passwords",
+            classPinsSubtitle: "List of 4-digit PINs for class monitors to record attendance",
+            classPinsSettingTitle: "Class Monitor Passwords",
+            classPinsSettingDesc: "View, copy, or edit PIN codes for all 30 classrooms.",
+            copyAllPins: "Copy All List",
+            toastPinCopied: "PIN copied to clipboard!",
+            toastAllPinsCopied: "All class PINs copied to clipboard!",
+            toastPinUpdated: "Class PIN updated successfully!",
+            toastPinsReset: "All class PINs reset to default!",
+            promptEditPin: "Enter new PIN (4 digits) for class",
+            confirmResetPins: "Are you sure you want to reset all class PINs to default values?",
             
             // Toasts & JS Alerts
             toastSaveSuccess: "Teacher profile saved successfully!",
@@ -349,11 +379,28 @@ document.addEventListener("DOMContentLoaded", () => {
         "12A", "12B", "12C", "12D", "12E", "12F"
     ];
 
+    // Predefined default 4-digit passwords for all 30 classrooms
+    const DEFAULT_CLASS_PASSWORDS = {
+        // ថ្នាក់ទី ៧ (Grade 7: 7001 - 7004)
+        "7A": "7001", "7B": "7002", "7C": "7003", "7D": "7004",
+        // ថ្នាក់ទី ៨ (Grade 8: 8001 - 8004)
+        "8A": "8001", "8B": "8002", "8C": "8003", "8D": "8004",
+        // ថ្នាក់ទី ៩ (Grade 9: 9001 - 9004)
+        "9A": "9001", "9B": "9002", "9C": "9003", "9D": "9004",
+        // ថ្នាក់ទី ១០ (Grade 10: 1001 - 1006)
+        "10A": "1001", "10B": "1002", "10C": "1003", "10D": "1004", "10E": "1005", "10F": "1006",
+        // ថ្នាក់ទី ១១ (Grade 11: 1101 - 1106)
+        "11A": "1101", "11B": "1102", "11C": "1103", "11D": "1104", "11E": "1105", "11F": "1106",
+        // ថ្នាក់ទី ១២ (Grade 12: 1201 - 1206)
+        "12A": "1201", "12B": "1202", "12C": "1203", "12D": "1204", "12E": "1205", "12F": "1206"
+    };
+
     // ---------------------------------------------------------
     // 2. STATE INITIALIZATION
     // ---------------------------------------------------------
     let teachers = [];
     let attendanceLogs = [];
+    let classPasswords = {};
     let currentLanguage = safeStorage.getItem("so_lang") || "km";
     let currentTheme = safeStorage.getItem("so_theme") || "light";
     let currentRole = safeStorage.getItem("so_role") || "admin";
@@ -429,6 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const attTeacher = document.getElementById("att-teacher");
     const attSubject = document.getElementById("att-subject");
     const attPin = document.getElementById("att-pin");
+    const btnToggleAttPin = document.getElementById("btn-toggle-att-pin");
     const attNotes = document.getElementById("att-notes");
     const attDate = document.getElementById("att-date");
     const attHour = document.getElementById("att-hour");
@@ -507,6 +555,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const importFileInput = document.getElementById("import-file-input");
     const btnResetDb = document.getElementById("btn-reset-db");
     const toastContainer = document.getElementById("toast-container");
+
+    // Class Passwords Modal & Controls
+    const btnDashboardClassPins = document.getElementById("btn-dashboard-class-pins");
+    const menuClassPins = document.getElementById("menu-class-pins");
+    const btnSettingsClassPins = document.getElementById("btn-settings-class-pins");
+    const modalClassPins = document.getElementById("modal-class-pins");
+    const btnCloseClassPinsModal = document.getElementById("btn-close-class-pins-modal");
+    const btnCloseClassPinsFooter = document.getElementById("btn-close-class-pins-footer");
+    const classPinsGrid = document.getElementById("class-pins-grid");
+    const classPinsSearch = document.getElementById("class-pins-search");
+    const btnCopyAllPins = document.getElementById("btn-copy-all-pins");
+    const btnResetAllPins = document.getElementById("btn-reset-all-pins");
 
     // ---------------------------------------------------------
     // 4. THEME & LANGUAGE CONFIGURATION
@@ -816,10 +876,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (storedTeachers) {
             try {
                 const parsed = JSON.parse(storedTeachers);
-                if (Array.isArray(parsed)) {
+                // If stored teachers has fewer than 20 teachers (old test data), upgrade to the full school registry (70 teachers)
+                if (Array.isArray(parsed) && parsed.length >= 50) {
                     teachers = parsed;
                 } else {
                     teachers = [...INITIAL_TEACHERS];
+                    saveData();
                 }
             } catch (e) {
                 console.error("Error loading teachers data", e);
@@ -847,6 +909,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             attendanceLogs = [];
         }
+
+        // 3. Load Class Passwords
+        loadClassPasswords();
     }
 
     function saveData() {
@@ -1260,6 +1325,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const day = String(today.getDate()).padStart(2, '0');
         attDate.value = `${year}-${month}-${day}`;
 
+        // Restore class & PIN if logged in as class monitor
+        const monClass = sessionStorage.getItem("so_monitor_class");
+        if (monClass && attClass) {
+            attClass.value = monClass;
+            if (classPasswords[monClass]) attPin.value = classPasswords[monClass];
+        }
+
         document.querySelectorAll("#page-attendance .error-msg").forEach(span => span.textContent = "");
         document.querySelectorAll("#page-attendance .form-input, #page-attendance .form-select").forEach(input => input.classList.remove("invalid"));
     }
@@ -1274,6 +1346,37 @@ document.addEventListener("DOMContentLoaded", () => {
             attSubject.value = "";
         }
     });
+
+    // Clear PIN error when class changes
+    if (attClass) {
+        attClass.addEventListener("change", () => {
+            const errPin = document.getElementById("err-att-pin");
+            if (errPin) errPin.textContent = "";
+            if (attPin) attPin.classList.remove("invalid");
+        });
+    }
+
+    // Toggle Attendance PIN password visibility
+    if (btnToggleAttPin && attPin) {
+        btnToggleAttPin.addEventListener("click", () => {
+            const isPassword = attPin.type === "password";
+            attPin.type = isPassword ? "text" : "password";
+            const svg = btnToggleAttPin.querySelector("svg");
+            if (svg) {
+                if (isPassword) {
+                    svg.innerHTML = `
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                    `;
+                } else {
+                    svg.innerHTML = `
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    `;
+                }
+            }
+        });
+    }
 
     // Submit Attendance Form Handler
     attendanceForm.addEventListener("submit", async (e) => {
@@ -1296,9 +1399,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!attDate.value) setAttError(attDate, "err-att-date", "validationErr");
         if (!attHour.value) setAttError(attHour, "err-att-hour", "validationErr");
         
-        // Simple security check (PIN code default is 1234)
-        if (attPin.value !== "1234") {
-            setAttError(attPin, "err-att-pin", "invalidPin");
+        // Security check: Verify PIN matches the selected class password
+        const selectedClass = attClass.value;
+        const expectedPin = classPasswords[selectedClass] || DEFAULT_CLASS_PASSWORDS[selectedClass];
+        if (!attPin.value || attPin.value.trim() !== expectedPin) {
+            setAttError(attPin, "err-att-pin", "invalidClassPin");
         }
 
         if (!isValid) {
@@ -1863,11 +1968,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sidebar navigation anchors
     document.querySelectorAll(".menu-item").forEach(item => {
         item.addEventListener("click", (e) => {
-            e.preventDefault();
             const href = item.getAttribute("href");
+            if (!href || href === "javascript:void(0)" || href.startsWith("javascript:")) {
+                return;
+            }
+            e.preventDefault();
             
             // Monitors shouldn't navigate to admin pages
-            if (currentRole === "monitor" && href !== "#attendance" && href !== "#dashboard") {
+            if (currentRole === "monitor" && href !== "#attendance") {
                 return;
             }
             
@@ -1881,12 +1989,215 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ---------------------------------------------------------
-    // 19. AUTHENTICATION & LOGIN SYSTEM
+    // 19. CLASS PASSWORDS MANAGEMENT (ADMIN)
+    // ---------------------------------------------------------
+    let currentGradeFilter = "all";
+
+    function loadClassPasswords() {
+        const stored = safeStorage.getItem("so_class_passwords");
+        if (stored) {
+            try {
+                classPasswords = Object.assign({}, DEFAULT_CLASS_PASSWORDS, JSON.parse(stored));
+            } catch (e) {
+                classPasswords = { ...DEFAULT_CLASS_PASSWORDS };
+            }
+        } else {
+            classPasswords = { ...DEFAULT_CLASS_PASSWORDS };
+        }
+    }
+
+    function saveClassPasswords() {
+        safeStorage.setItem("so_class_passwords", JSON.stringify(classPasswords));
+    }
+
+    function openClassPinsModal() {
+        if (modalClassPins) {
+            modalClassPins.classList.remove("hidden");
+            renderClassPins(currentGradeFilter, classPinsSearch ? classPinsSearch.value.trim() : "");
+            setTimeout(() => {
+                if (classPinsSearch) classPinsSearch.focus();
+            }, 100);
+        }
+    }
+
+    function closeClassPinsModal() {
+        if (modalClassPins) {
+            modalClassPins.classList.add("hidden");
+        }
+    }
+
+    function renderClassPins(filterGrade = "all", searchTerm = "") {
+        if (!classPinsGrid) return;
+        classPinsGrid.innerHTML = "";
+
+        const classes = CAMBODIAN_CLASSROOMS.filter(cls => {
+            if (filterGrade !== "all") {
+                const gradeNum = cls.replace(/[A-Z]/g, "");
+                if (gradeNum !== filterGrade) return false;
+            }
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                const pin = String(classPasswords[cls] || "");
+                if (!cls.toLowerCase().includes(term) && !pin.includes(term)) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        if (classes.length === 0) {
+            classPinsGrid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 32px 16px; color: var(--text-secondary); font-size: 13px;">
+                    ${currentLanguage === 'km' ? 'រកមិនឃើញថ្នាក់ដែលស្វែងរកទេ' : 'No classrooms found matching search'}
+                </div>
+            `;
+            return;
+        }
+
+        classes.forEach(cls => {
+            const pin = classPasswords[cls] || DEFAULT_CLASS_PASSWORDS[cls] || "1234";
+            const card = document.createElement("div");
+            card.className = "class-pin-card";
+            card.innerHTML = `
+                <div class="class-pin-header">
+                    <span class="class-pin-badge">ថ្នាក់ ${cls}</span>
+                    <span style="font-size: 11px; color: var(--text-light); font-weight: 600;">Grade ${cls}</span>
+                </div>
+                <div class="class-pin-code-wrap">
+                    <span class="class-pin-val">${pin}</span>
+                </div>
+                <div class="class-pin-actions">
+                    <button type="button" class="class-pin-btn btn-copy-pin" data-class="${cls}" data-pin="${pin}" title="ចម្លងលេខកូដ">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>ចម្លង</span>
+                    </button>
+                    <button type="button" class="class-pin-btn btn-edit-pin" data-class="${cls}" data-pin="${pin}" title="កែប្រែ">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        <span>កែប្រែ</span>
+                    </button>
+                </div>
+            `;
+
+            card.querySelector(".btn-copy-pin").addEventListener("click", () => {
+                copyTextToClipboard(`ថ្នាក់ ${cls} : ${pin}`);
+                showToast("toastPinCopied", "success");
+            });
+
+            card.querySelector(".btn-edit-pin").addEventListener("click", () => {
+                const promptMsg = `${TRANSLATIONS[currentLanguage].promptEditPin} ${cls}:`;
+                const newPin = prompt(promptMsg, pin);
+                if (newPin !== null) {
+                    const trimmed = newPin.trim();
+                    if (/^\d{3,6}$/.test(trimmed)) {
+                        classPasswords[cls] = trimmed;
+                        saveClassPasswords();
+                        renderClassPins(currentGradeFilter, classPinsSearch ? classPinsSearch.value.trim() : "");
+                        showToast("toastPinUpdated", "success");
+                    } else if (trimmed) {
+                        alert(currentLanguage === "km" ? "លេខកូដសម្ងាត់ត្រូវតែជាលេខ ៣ ទៅ ៦ ខ្ទង់!" : "PIN must be 3 to 6 digits!");
+                    }
+                }
+            });
+
+            classPinsGrid.appendChild(card);
+        });
+    }
+
+    function copyTextToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.style.position = "fixed";
+        temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+            document.execCommand("copy");
+        } catch (e) {
+            console.error("Copy failed", e);
+        }
+        document.body.removeChild(temp);
+    }
+
+    if (btnDashboardClassPins) btnDashboardClassPins.addEventListener("click", openClassPinsModal);
+    if (menuClassPins) menuClassPins.addEventListener("click", openClassPinsModal);
+    if (btnSettingsClassPins) btnSettingsClassPins.addEventListener("click", openClassPinsModal);
+    if (btnCloseClassPinsModal) btnCloseClassPinsModal.addEventListener("click", closeClassPinsModal);
+    if (btnCloseClassPinsFooter) btnCloseClassPinsFooter.addEventListener("click", closeClassPinsModal);
+
+    if (btnCopyAllPins) {
+        btnCopyAllPins.addEventListener("click", () => {
+            let fullText = "🔑 បញ្ជីលេខសម្ងាត់ប្រធានថ្នាក់ស្រង់វត្តមានគ្រូ - វិទ្យាល័យសម្ដេចឪ\n";
+            fullText += "========================================\n";
+            CAMBODIAN_CLASSROOMS.forEach(cls => {
+                const pin = classPasswords[cls] || DEFAULT_CLASS_PASSWORDS[cls];
+                fullText += `• ថ្នាក់ ${cls} ៖ ${pin}\n`;
+            });
+            fullText += "========================================\n";
+            fullText += "📌 ប្រើសម្រាប់បញ្ចូលពេលកត់ត្រាអវត្តមានគ្រូបង្រៀន";
+            copyTextToClipboard(fullText);
+            showToast("toastAllPinsCopied", "success");
+        });
+    }
+
+    if (btnResetAllPins) {
+        btnResetAllPins.addEventListener("click", () => {
+            const confirmMsg = TRANSLATIONS[currentLanguage].confirmResetPins;
+            if (confirm(confirmMsg)) {
+                classPasswords = { ...DEFAULT_CLASS_PASSWORDS };
+                saveClassPasswords();
+                renderClassPins(currentGradeFilter, classPinsSearch ? classPinsSearch.value.trim() : "");
+                showToast("toastPinsReset", "success");
+            }
+        });
+    }
+
+    document.querySelectorAll("#grade-filter-tabs .grade-tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll("#grade-filter-tabs .grade-tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentGradeFilter = btn.getAttribute("data-grade");
+            renderClassPins(currentGradeFilter, classPinsSearch ? classPinsSearch.value.trim() : "");
+        });
+    });
+
+    if (classPinsSearch) {
+        classPinsSearch.addEventListener("input", (e) => {
+            renderClassPins(currentGradeFilter, e.target.value.trim());
+        });
+    }
+
+    // ---------------------------------------------------------
+    // 20. AUTHENTICATION & LOGIN SYSTEM
     // ---------------------------------------------------------
     function checkAuth() {
         const isAuthenticated = sessionStorage.getItem("so_authenticated") === "true";
+        const roleLogged = sessionStorage.getItem("so_role_logged") || "admin";
+        
         if (isAuthenticated) {
             loginOverlay.classList.add("hidden");
+            if (roleLogged === "monitor") {
+                applyRoleTheme("monitor");
+                const monClass = sessionStorage.getItem("so_monitor_class");
+                if (monClass && attClass) {
+                    attClass.value = monClass;
+                    const p = classPasswords[monClass] || DEFAULT_CLASS_PASSWORDS[monClass];
+                    if (p && attPin) attPin.value = p;
+                }
+            }
         } else {
             loginOverlay.classList.remove("hidden");
             setTimeout(() => { loginPassword.focus(); }, 100);
@@ -1899,20 +2210,54 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (pwd === "88889999") {
             sessionStorage.setItem("so_authenticated", "true");
+            sessionStorage.setItem("so_role_logged", "admin");
+            applyRoleTheme("admin");
+            if (roleSelect) roleSelect.value = "admin";
             loginOverlay.classList.add("hidden");
             loginErrorMsg.style.display = "none";
             loginPassword.value = "";
             showToast("toastSaveSuccess", "success");
-        } else {
-            loginErrorMsg.style.display = "block";
-            loginPassword.value = "";
-            loginPassword.focus();
-            
-            // Trigger shake animation by removing and re-adding class
-            loginErrorMsg.style.animation = 'none';
-            loginErrorMsg.offsetHeight; /* trigger reflow */
-            loginErrorMsg.style.animation = null;
+            navigateToPage("#dashboard");
+            return;
         }
+
+        // Check if entered password matches any class password
+        let matchedClass = null;
+        for (const [cls, pass] of Object.entries(classPasswords)) {
+            if (pass === pwd) {
+                matchedClass = cls;
+                break;
+            }
+        }
+
+        if (matchedClass) {
+            sessionStorage.setItem("so_authenticated", "true");
+            sessionStorage.setItem("so_role_logged", "monitor");
+            sessionStorage.setItem("so_monitor_class", matchedClass);
+            applyRoleTheme("monitor");
+            if (roleSelect) roleSelect.value = "monitor";
+            loginOverlay.classList.add("hidden");
+            loginErrorMsg.style.display = "none";
+            loginPassword.value = "";
+            
+            // Pre-select class and pre-fill PIN
+            if (attClass) attClass.value = matchedClass;
+            if (attPin) attPin.value = pwd;
+            
+            showToast("toastSaveSuccess", "success");
+            navigateToPage("#attendance");
+            window.location.hash = "#attendance";
+            return;
+        }
+
+        loginErrorMsg.style.display = "block";
+        loginPassword.value = "";
+        loginPassword.focus();
+        
+        // Trigger shake animation by removing and re-adding class
+        loginErrorMsg.style.animation = 'none';
+        loginErrorMsg.offsetHeight; /* trigger reflow */
+        loginErrorMsg.style.animation = null;
     });
 
     btnLoginTogglePassword.addEventListener("click", () => {
@@ -1940,11 +2285,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnLogout.addEventListener("click", () => {
         sessionStorage.removeItem("so_authenticated");
+        sessionStorage.removeItem("so_role_logged");
+        sessionStorage.removeItem("so_monitor_class");
         window.location.reload();
     });
 
     // ---------------------------------------------------------
-    // 20. INITIALIZATION RUN
+    // 21. INITIALIZATION RUN
     // ---------------------------------------------------------
     loadData();
     initThemeAndLang();

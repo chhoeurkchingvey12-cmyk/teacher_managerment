@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
@@ -118,6 +118,15 @@
                     </svg>
                     <span data-i18n="menuAttendanceLogs">កំណត់ត្រាអវត្តមាន</span>
                 </a>
+
+                <!-- Admin Only Class Passwords -->
+                <a href="javascript:void(0)" class="menu-item admin-only" id="menu-class-pins">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span data-i18n="menuClassPins">លេខសម្ងាត់គ្រប់ថ្នាក់</span>
+                </a>
                 
                 <a href="#settings" class="menu-item admin-only" id="menu-settings">
                     <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -209,6 +218,15 @@
                             <h3 data-i18n="welcomeTitle">ប្រព័ន្ធគ្រប់គ្រងគ្រូបង្រៀន</h3>
                             <h4 data-i18n="schoolNameFull">វិទ្យាល័យសម្ដេចឪ ខេត្តបន្ទាយមានជ័យ</h4>
                             <p data-i18n="welcomeSub">សូមស្វាគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងសាលារៀនបែបឌីជីថល ងាយស្រួល រហ័ស និងមានសុវត្ថិភាព។</p>
+                            <div style="margin-top: 16px;">
+                                <button type="button" id="btn-dashboard-class-pins" class="btn" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #ffffff; border: none; font-weight: 700; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4); padding: 10px 18px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <span data-i18n="btnViewClassPins">🔑 លេខសម្ងាត់គ្រប់ថ្នាក់ (Class Passwords)</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="banner-decor">
                             <svg viewBox="0 0 200 200" class="decor-svg">
@@ -682,10 +700,18 @@
                                     </div>
                                 </div>
 
-                                <!-- Class Monitor PIN (Optional security check) -->
+                                <!-- Class Monitor PIN (Security check) -->
                                 <div class="form-group" id="pin-group">
-                                    <label for="att-pin" class="form-label"><span data-i18n="labelAttPin">លេខកូដប្រធានថ្នាក់ (PIN)</span> <span class="required">*</span></label>
-                                    <input type="password" id="att-pin" class="form-input" placeholder="កូដលំនាំដើម: 1234" maxlength="4" style="letter-spacing: 3px; font-family: var(--font-english); font-weight: bold; text-align: center;">
+                                    <label for="att-pin" class="form-label"><span data-i18n="labelAttPin">លេខកូដសម្ងាត់ថ្នាក់ (PIN)</span> <span class="required">*</span></label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="password" id="att-pin" class="form-input" placeholder="បញ្ចូលលេខកូដ ៤ ខ្ទង់" maxlength="6" style="letter-spacing: 3px; font-family: var(--font-english); font-weight: bold; text-align: center; padding-right: 44px;" required autocomplete="off">
+                                        <button type="button" id="btn-toggle-att-pin" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: var(--text-light); padding: 4px; display: flex; align-items: center;" title="បង្ហាញ/លាក់លេខសម្ងាត់">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                     <span class="error-msg" id="err-att-pin"></span>
                                 </div>
 
@@ -897,6 +923,21 @@
                                 <p class="settings-desc" data-i18n="backupDesc">រក្សាទុកទិន្នន័យគ្រូបង្រៀនទាំងអស់របស់អ្នក ឬស្តារទិន្នន័យត្រឡប់មកវិញតាមរយៈឯកសារកុំព្យូទ័រ (JSON)។</p>
                                 
                                 <div class="settings-actions">
+                                    <!-- Class Passwords View -->
+                                    <div class="settings-action-item" style="border-left: 4px solid #d97706;">
+                                        <div class="action-info">
+                                            <h4 data-i18n="classPinsSettingTitle">លេខសម្ងាត់ប្រធានថ្នាក់ (Class Passwords)</h4>
+                                            <p data-i18n="classPinsSettingDesc">ពិនិត្យមើល ចម្លង ឬកែប្រែលេខកូដសម្ងាត់សម្រាប់ប្រធានថ្នាក់ទាំង ៣០ ថ្នាក់។</p>
+                                        </div>
+                                        <button type="button" id="btn-settings-class-pins" class="btn btn-secondary">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                            </svg>
+                                            <span data-i18n="btnViewClassPinsShort">មើលលេខសម្ងាត់</span>
+                                        </button>
+                                    </div>
+
                                     <!-- Export -->
                                     <div class="settings-action-item">
                                         <div class="action-info">
@@ -1154,6 +1195,75 @@ function setupReportSheet() {
             <div class="confirm-footer">
                 <button class="btn btn-secondary" id="btn-delete-cancel" data-i18n="btnCancel">បោះបង់</button>
                 <button class="btn btn-danger" id="btn-delete-confirm" data-i18n="btnConfirmDelete">យល់ព្រមលុប</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. CLASS PASSWORDS MODAL (Admin Only) -->
+    <div class="modal-overlay hidden" id="modal-class-pins">
+        <div class="modal-card" style="max-width: 840px; width: 95%;">
+            <button class="modal-close" id="btn-close-class-pins-modal" title="បិទ">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="profile-modal-header" style="background: linear-gradient(135deg, #1e1b4b 0%, #0e1e38 50%, #d97706 100%);">
+                <div class="profile-avatar" style="background-color: rgba(217, 119, 6, 0.25); border-color: #d97706; color: #fbbf24; font-size: 28px;">
+                    🔑
+                </div>
+                <div class="profile-intro">
+                    <h3 data-i18n="classPinsTitle">លេខសម្ងាត់ប្រធានថ្នាក់គ្រប់ថ្នាក់</h3>
+                    <h4 data-i18n="classPinsSubtitle">បញ្ជីលេខកូដសម្ងាត់ ៤ ខ្ទង់ សម្រាប់ប្រធានថ្នាក់ប្រើពេលស្រង់វត្តមាន</h4>
+                    <span class="badge" style="background: rgba(217, 119, 6, 0.3); border-color: #f59e0b; color: #ffffff;" id="class-pins-count-badge">សរុប ៣០ ថ្នាក់</span>
+                </div>
+            </div>
+            
+            <div class="profile-modal-body" style="max-height: 60vh; padding: 24px;">
+                <!-- Filter & Search Toolbar -->
+                <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+                    <!-- Grade Filter Tabs -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="grade-filter-tabs">
+                        <button type="button" class="grade-tab-btn active" data-grade="all">ទាំងអស់ (All)</button>
+                        <button type="button" class="grade-tab-btn" data-grade="7">ថ្នាក់ទី ៧</button>
+                        <button type="button" class="grade-tab-btn" data-grade="8">ថ្នាក់ទី ៨</button>
+                        <button type="button" class="grade-tab-btn" data-grade="9">ថ្នាក់ទី ៩</button>
+                        <button type="button" class="grade-tab-btn" data-grade="10">ថ្នាក់ទី ១០</button>
+                        <button type="button" class="grade-tab-btn" data-grade="11">ថ្នាក់ទី ១១</button>
+                        <button type="button" class="grade-tab-btn" data-grade="12">ថ្នាក់ទី ១២</button>
+                    </div>
+                    
+                    <!-- Search + Actions Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <input type="text" id="class-pins-search" class="form-input" placeholder="🔍 ស្វែងរកថ្នាក់ (ឧ. 12A)..." style="font-size: 13px; padding: 8px 14px;">
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" id="btn-copy-all-pins" class="btn btn-secondary" style="font-size: 12px; padding: 8px 12px; display: inline-flex; align-items: center; gap: 6px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span data-i18n="copyAllPins">ចម្លងបញ្ជីទាំងអស់</span>
+                            </button>
+                            <button type="button" id="btn-reset-all-pins" class="btn btn-secondary" style="font-size: 12px; padding: 8px 12px; color: var(--color-danger);" title="កំណត់លេខកូដទាំងអស់ទៅលំនាំដើមវិញ">
+                                <span>🔄 កំណត់ឡើងវិញ</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passwords Grid Container -->
+                <div id="class-pins-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px;">
+                    <!-- Rendered dynamically by app.js -->
+                </div>
+            </div>
+
+            <div class="profile-modal-footer" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+                    <span>💡 ចុចប៊ូតុង <strong>ចម្លង</strong> ដើម្បីផ្ញើលេខសម្ងាត់ទៅប្រធានថ្នាក់តាម Telegram</span>
+                </div>
+                <button class="btn btn-secondary" id="btn-close-class-pins-footer" data-i18n="btnClose">បិទ</button>
             </div>
         </div>
     </div>

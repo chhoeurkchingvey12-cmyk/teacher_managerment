@@ -1,4 +1,4 @@
-const CACHE_NAME = "samdech-ouv-cache-v24";
+const CACHE_NAME = "samdech-ouv-cache-v26";
 const ASSETS = [
     "./",
     "./index.html",

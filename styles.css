@@ -1620,6 +1620,18 @@ body.role-monitor .admin-only {
     display: none !important;
 }
 
+body.role-monitor .role-selector-wrapper {
+    display: none !important;
+}
+
+body.role-monitor #page-dashboard,
+body.role-monitor #page-teachers,
+body.role-monitor #page-add-teacher,
+body.role-monitor #page-attendance-logs,
+body.role-monitor #page-settings {
+    display: none !important;
+}
+
 body.role-monitor .sidebar {
     width: var(--sidebar-width); /* Disable collapsing in monitor mode for clean display */
 }
@@ -2109,4 +2121,119 @@ body.role-monitor .sidebar {
     background: #ef4444;
     color: #ffffff;
     border-color: #ef4444;
+}
+
+/* =====================================================================
+   21. CLASS PASSWORDS MODAL & PIN CARDS
+   ===================================================================== */
+.grade-tab-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.grade-tab-btn:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.grade-tab-btn.active {
+    background: #d97706;
+    border-color: #d97706;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+}
+
+.class-pin-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.class-pin-card:hover {
+    border-color: #d97706;
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
+    transform: translateY(-2px);
+}
+
+.class-pin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.class-pin-badge {
+    font-size: 14px;
+    font-weight: 800;
+    color: #d97706;
+    background: rgba(217, 119, 6, 0.12);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: var(--font-english);
+    letter-spacing: 0.5px;
+}
+
+.class-pin-code-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-app);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--border-color);
+}
+
+.class-pin-val {
+    font-family: 'Inter', Courier, monospace;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+}
+
+.class-pin-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.class-pin-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.class-pin-btn:hover {
+    background: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+.class-pin-btn.btn-edit-pin:hover {
+    background: #d97706;
+    border-color: #d97706;
+    color: #ffffff;
 }
